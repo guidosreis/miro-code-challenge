@@ -1,0 +1,28 @@
+{
+  "name": "miro-code-challenge",
+  "version": "1.0.0",
+  "description": "Code challenge for a frontend engineer position at Miro",
+  "private": true,
+  "scripts": {
+    "build": "cross-env NODE_ENV=production npm run rollup & npm run rollup:production",
+    "build:watch": "cross-env NODE_ENV=development npm run rollup -- --watch",
+    "rollup": "rollup --config",
+    "rollup:production": "cross-env NODE_ENV=production npm run rollup",
+    "test": "jest"
+  },
+  "author": "Guilherme dos Reis",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "babel-jest": "^26.6.3",
+    "babel-loader": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "jest": "^26.6.3",
+    "rollup": "^2.35.1",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-uglify": "^6.0.4",
+    "rollup-watch": "^4.3.1"
+  }
+}

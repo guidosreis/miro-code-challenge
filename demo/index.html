@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Miro Code Challenge</title>
+</head>
+<body>
+<form>
+  <div id="emails-input"></div>
+  <button type="button" id="add-emails">Add email</button>
+  <button type="button" id="get-count">Get emails count</button>
+</form>
+
+<script type="text/javascript" src="../dist/emails-input.min.js"></script>
+<script type="text/javascript">
+  const inputContainerEl = document.getElementById('emails-input');
+  const addEmailBtn = document.getElementById('add-emails');
+  const getCountBtn = document.getElementById('get-count');
+  const emailsInput = EmailsInput(inputContainerEl, {
+    placeholder: 'add more people...'
+  });
+
+  addEmailBtn.addEventListener('click', emailsInput.add);
+  getCountBtn.addEventListener('click', emailsInput.getCount);
+</script>
+</body>
+</html>
