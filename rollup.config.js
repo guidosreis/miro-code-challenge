@@ -4,18 +4,14 @@ import { uglify } from 'rollup-plugin-uglify';
 const production = process.env.NODE_ENV === 'production';
 
 export default {
-  input: 'src/emails-input.js',
+  input: {
+    'emails-input': 'src/emails-input.js'
+  },
   output: {
-    file: `dist/emails-input${production ? '.min' : ''}.js`,
+    dir: 'dist',
+    entryFileNames: `[name]${production ? '.min' : ''}.js`,
     format: 'umd',
-    name: 'ityped',
-    sourcemap: true,
-    banner: `/**
-    * @name ityped
-    * @description Dead simple Animated Typing with no dependencies
-    * @author Luis Vinícius
-    * @email luisviniciusbarreto@gmail.com
-    */`,
+    name: 'EmailsInput'
   },
   plugins: [
     babel()

@@ -1,35 +1,38 @@
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.EmailsInput = factory();
+/**
+ * @param {Element|HTMLDocument|Window} element
+ * @param {Object|undefined} options
+ * @returns {Object|undefined}
+ */
+const EmailsInput = (element, options) => {
+  if (element.tagName !== 'DIV') {
+    return;
   }
-}(typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : this, function() {
+
   const defaults = {
     placeholder: 'add...',
-    wrapperClassName: 'emails-block',
-    inputClassName: 'emails-input',
-    emailBlockClassName: 'email-block',
-    emailBlockTextClassName: 'email-block__text',
-    emailBlockRemoveButtonClassName: 'email-block__remove-button'
   };
-  const plugin = {};
+  const plugin = {
+    wrapperClassname: 'emails-block',
+    inputClassname: 'emails-input',
+    emailBlockClassname: 'email-block',
+    emailBlockTextClassname: 'email-block__text',
+    emailBlockButtonClassname: 'email-block__remove-button'
+  };
 
   function init() {
-    const template = getPluginTemplate();
-
-    plugin.element.insertAdjacentHTML('beforeend', template);
+    plugin.element = element;
+    plugin.settings = { ...defaults, ...options };
+    plugin.element.insertAdjacentHTML('beforeend', getPluginTemplate());
     plugin.emails = [];
+
     addEventListeners();
   }
 
   function addEventListeners() {
-    on('focusout', delegate(`.${plugin.settings.inputClassName}`, handleInputBlur), plugin.element);
-    on('keypress', delegate(`.${plugin.settings.inputClassName}`, handleInputKeyPress), plugin.element);
-    on('keyup', delegate(`.${plugin.settings.inputClassName}`, handleInputKeyUp), plugin.element);
-    on('click', delegate(`.${plugin.settings.emailBlockRemoveButtonClassName}`, handleRemoveEmail), plugin.element);
+    on('focusout', delegate(`.${plugin.inputClassname}`, handleInputBlur), plugin.element);
+    on('keypress', delegate(`.${plugin.inputClassname}`, handleInputKeyPress), plugin.element);
+    on('keyup', delegate(`.${plugin.inputClassname}`, handleInputKeyUp), plugin.element);
+    on('click', delegate(`.${plugin.emailBlockButtonClassname}`, handleRemoveEmail), plugin.element);
   }
 
   /**
@@ -93,11 +96,11 @@
    * @param {Object} data
    */
   function handleRemoveEmail({ target }) {
-    const emailBlockEl = target.closest(`.${plugin.settings.emailBlockClassName}`);
-    const email = emailBlockEl.querySelector(`.${plugin.settings.emailBlockTextClassName}`).innerText;
+    const emailBlockEl = target.closest(`.${plugin.emailBlockClassname}`);
+    const email = emailBlockEl.querySelector(`.${plugin.emailBlockTextClassname}`).innerText;
     const index = plugin.emails.indexOf(email);
 
-    removeElement(emailBlockEl);
+    emailBlockEl.parent.removeChild(emailBlockEl);
 
     if (index >= 0) {
       plugin.emails.splice(index, 1);
@@ -116,7 +119,7 @@
     const template = getEmailBlockTemplate(email);
 
     plugin.emails.push(email);
-    document.querySelector(`.${plugin.settings.wrapperClassName}`).insertAdjacentHTML('beforeend', template);
+    document.querySelector(`.${plugin.wrapperClassname}`).insertAdjacentHTML('beforeend', template);
     return true;
   }
 
@@ -212,21 +215,12 @@
   }
 
   /**
-   * @param {Element|HTMLElement} element
-   */
-  function removeElement(element) {
-    const parent = element.parentNode;
-
-    parent.removeChild(element);
-  }
-
-  /**
    * @returns {string}
    */
   function getPluginTemplate() {
     return `
-      <div class="${plugin.settings.wrapperClassName}"></div>
-      <input class="${plugin.settings.inputClassName}" placeholder="${plugin.settings.placeholder}" />
+      <div class="${plugin.wrapperClassname}"></div>
+      <input class="${plugin.inputClassname}" placeholder="${plugin.settings.placeholder}" />
     `;
   }
 
@@ -236,31 +230,24 @@
    */
   function getEmailBlockTemplate(email) {
     const modifierClass = validateEmail(email)
-      ? `${plugin.settings.emailBlockClassName}--valid`
-      : `${plugin.settings.emailBlockClassName}--invalid`;
+      ? `${plugin.emailBlockClassname}--valid`
+      : `${plugin.emailBlockClassname}--invalid`;
 
     return `
-      <div class="${plugin.settings.emailBlockClassName} ${modifierClass}">
-        <span class="${plugin.settings.emailBlockTextClassName}">${email}</span>
-        <button class="${plugin.settings.emailBlockRemoveButtonClassName}">x</button>
+      <div class="${plugin.emailBlockClassname} ${modifierClass}">
+        <span class="${plugin.emailBlockTextClassname}">${email}</span>
+        <button class="${plugin.emailBlockButtonClassname}">x</button>
       </div>
     `;
   }
 
-  return function(element, options) {
-    if (element.tagName !== 'DIV') {
-      return;
-    }
+  init();
 
-    plugin.element = element;
-    plugin.settings = Object.assign({}, defaults, options);
+  return {
+    ...plugin,
+    add,
+    getCount
+  };
+};
 
-    init();
-
-    return {
-      ...plugin,
-      add,
-      getCount
-    };
-  }
-}));
+export default EmailsInput;

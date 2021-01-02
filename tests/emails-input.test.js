@@ -1,4 +1,4 @@
-const EmailsInput = require('../src/emails-input');
+import EmailsInput from '../src/emails-input';
 
 describe('EmailsInput', () => {
   const elementId = 'emails-input';
@@ -26,7 +26,7 @@ describe('EmailsInput', () => {
         const emailsInput = EmailsInput(element);
 
         // assert
-        expect(element.querySelectorAll(`.${emailsInput.settings.inputClassName}`)).toHaveLength(1);
+        expect(element.querySelectorAll(`.${emailsInput.inputClassname}`)).toHaveLength(1);
       });
     });
 
@@ -57,8 +57,8 @@ describe('EmailsInput', () => {
         document.body.innerHTML = getValidHTML(elementId);
         element = document.getElementById(elementId);
         emailsInput = EmailsInput(element);
-        input = element.querySelector(`.${emailsInput.settings.inputClassName}`);
-        emailsBlockWrapper = element.querySelector(`.${emailsInput.settings.wrapperClassName}`);
+        input = element.querySelector(`.${emailsInput.inputClassname}`);
+        emailsBlockWrapper = element.querySelector(`.${emailsInput.wrapperClassname}`);
       });
 
       describe.each(cases)('%s', (title, event, validInputValue) => {
@@ -70,7 +70,7 @@ describe('EmailsInput', () => {
           input.dispatchEvent(event);
 
           // assert
-          expect(emailsBlockWrapper.querySelectorAll(`.${emailsInput.settings.emailBlockClassName}`)).toHaveLength(0);
+          expect(emailsBlockWrapper.querySelectorAll(`.${emailsInput.emailBlockClassname}`)).toHaveLength(0);
         });
 
         it('should create an email block and clear the input when the input is filled', () => {
@@ -81,7 +81,7 @@ describe('EmailsInput', () => {
           input.dispatchEvent(event);
 
           // assert
-          expect(emailsBlockWrapper.querySelectorAll(`.${emailsInput.settings.emailBlockClassName}`)).toHaveLength(1);
+          expect(emailsBlockWrapper.querySelectorAll(`.${emailsInput.emailBlockClassname}`)).toHaveLength(1);
           expect(input.value).toEqual('');
         });
       });
@@ -97,7 +97,7 @@ describe('EmailsInput', () => {
           input.dispatchEvent(event);
 
           // assert
-          expect(emailsBlockWrapper.querySelectorAll(`.${emailsInput.settings.emailBlockClassName}`)).toHaveLength(4);
+          expect(emailsBlockWrapper.querySelectorAll(`.${emailsInput.emailBlockClassname}`)).toHaveLength(4);
           expect(input.value).toEqual('');
         });
       });
@@ -118,7 +118,7 @@ describe('EmailsInput', () => {
 
     describe('When getCount is called', () => {
       it('should show an alert with valid emails count', () => {
-        const input = element.querySelector(`.${emailsInput.settings.inputClassName}`);
+        const input = element.querySelector(`.${emailsInput.inputClassname}`);
         const event = new KeyboardEvent('keyup', { bubbles: true, cancelable: true });
 
         // arrange
@@ -135,13 +135,13 @@ describe('EmailsInput', () => {
 
     describe('When add is called', () => {
       it('should add a new email block', () => {
-        const emailsBlockWrapper = element.querySelector(`.${emailsInput.settings.wrapperClassName}`);
+        const emailsBlockWrapper = element.querySelector(`.${emailsInput.wrapperClassname}`);
 
         // act
         emailsInput.add();
 
         // assert
-        expect(emailsBlockWrapper.querySelectorAll(`.${emailsInput.settings.emailBlockClassName}`)).toHaveLength(1);
+        expect(emailsBlockWrapper.querySelectorAll(`.${emailsInput.emailBlockClassname}`)).toHaveLength(1);
       });
     });
   });
