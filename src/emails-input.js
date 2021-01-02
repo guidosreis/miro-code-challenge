@@ -1,3 +1,5 @@
+import './emails-input.scss';
+
 /**
  * @param {Element|HTMLDocument|Window} element
  * @param {Object|undefined} options
@@ -100,7 +102,7 @@ const EmailsInput = (element, options) => {
     const email = emailBlockEl.querySelector(`.${plugin.emailBlockTextClassname}`).innerText;
     const index = plugin.emails.indexOf(email);
 
-    emailBlockEl.parent.removeChild(emailBlockEl);
+    emailBlockEl.parentNode.removeChild(emailBlockEl);
 
     if (index >= 0) {
       plugin.emails.splice(index, 1);
@@ -119,7 +121,7 @@ const EmailsInput = (element, options) => {
     const template = getEmailBlockTemplate(email);
 
     plugin.emails.push(email);
-    document.querySelector(`.${plugin.wrapperClassname}`).insertAdjacentHTML('beforeend', template);
+    document.querySelector(`.${plugin.inputClassname}`).insertAdjacentHTML('beforebegin', template);
     return true;
   }
 
@@ -219,8 +221,9 @@ const EmailsInput = (element, options) => {
    */
   function getPluginTemplate() {
     return `
-      <div class="${plugin.wrapperClassname}"></div>
-      <input class="${plugin.inputClassname}" placeholder="${plugin.settings.placeholder}" />
+      <div class="${plugin.wrapperClassname}">
+        <input class="${plugin.inputClassname}" placeholder="${plugin.settings.placeholder}" />
+      </div>
     `;
   }
 
@@ -236,7 +239,7 @@ const EmailsInput = (element, options) => {
     return `
       <div class="${plugin.emailBlockClassname} ${modifierClass}">
         <span class="${plugin.emailBlockTextClassname}">${email}</span>
-        <button class="${plugin.emailBlockButtonClassname}">x</button>
+        <button type="button" class="${plugin.emailBlockButtonClassname}">&times</button>
       </div>
     `;
   }
