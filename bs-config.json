@@ -1,0 +1,8 @@
+{
+  "files": [
+    "./dist/**/*.{html,htm,css,js}",
+    "./demo/**/*.{html,htm,css,js}"
+  ],
+  "server": { "baseDir": "./demo" },
+  "serveStatic": [".", "./dist"]
+}

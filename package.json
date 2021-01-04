@@ -8,6 +8,8 @@
     "build:watch": "npm run rollup -- --watch",
     "rollup": "rollup --config",
     "rollup:production": "cross-env NODE_ENV=production npm run rollup",
+    "server": "lite-server",
+    "start": "npm-run-all --parallel build:watch server",
     "test": "jest"
   },
   "author": "Guilherme dos Reis",
@@ -23,7 +25,9 @@
     "cssnano": "^4.1.10",
     "jest": "^26.6.3",
     "jest-transform-stub": "^2.0.0",
+    "lite-server": "^2.6.1",
     "node-sass": "^5.0.0",
+    "npm-run-all": "^4.1.5",
     "postcss": "^8.2.2",
     "postcss-preset-env": "^6.7.0",
     "rollup": "^2.35.1",
