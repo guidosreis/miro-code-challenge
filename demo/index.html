@@ -4,13 +4,88 @@
   <meta charset="UTF-8">
   <title>Miro Code Challenge</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
   <link href="../dist/emails-input.min.css" rel="stylesheet">
+  <style>
+    * {
+      border: 0;
+      margin: 0;
+      padding: 0;
+    }
+
+    *:hover,
+    *:focus {
+      outline: none;
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: 540px;
+      margin: auto ;
+      padding-top: 32px;
+    }
+
+    .panel {
+      overflow: hidden;
+      -webkit-border-radius: 8px;
+         -moz-border-radius: 8px;
+              border-radius: 8px;
+      -webkit-box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+         -moz-box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+              box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .panel-heading {
+      font-family: 'Open Sans', sans-serif;
+      font-weight: normal;
+      font-size: 20px;
+      line-height: 28px;
+      color: #050038;
+      margin-bottom: 24px;
+    }
+
+    .panel-body {
+      background-color: #F8F8F7;
+      padding: 32px 50px 24px;
+    }
+
+    .panel-footer {
+      padding: 24px 50px 32px;
+    }
+
+    .button {
+      background: #4262FF;
+      cursor: pointer;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 14px;
+      line-height: 24px;
+      color: #ffffff;
+      padding: 8px 16px;
+      -webkit-border-radius: 6px;
+         -moz-border-radius: 6px;
+              border-radius: 6px;
+    }
+
+    .button:first-child {
+      margin-right: 16px;
+    }
+  </style>
 </head>
 <body>
 <form>
-  <div id="emails-input"></div>
-  <button type="button" id="add-emails">Add email</button>
-  <button type="button" id="get-count">Get emails count</button>
+  <div class="wrapper">
+    <div class="panel">
+      <div class="panel-body">
+        <h1 class="panel-heading">Share <strong>Board name</strong> with others</h1>
+        <div id="emails-input"></div>
+      </div>
+      <div class="panel-footer">
+        <button class="button" type="button" id="add-emails">Add email</button>
+        <button class="button" type="button" id="get-count">Get emails count</button>
+      </div>
+    </div>
+  </div>
 </form>
 
 <script type="text/javascript" src="../dist/emails-input.min.js"></script>
